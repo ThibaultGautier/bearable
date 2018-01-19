@@ -7,7 +7,7 @@ var bar_route = express.Router()
 bar_route.route('/')
     .get((req, res) => {
         Bars.find({}, (err, result) => {
-            if(!result.length) res.send("Aucun bar trouvé")
+            if (!result.length) res.send("Aucun bar trouvé")
             else res.json(result)
         })
     })
@@ -15,7 +15,7 @@ bar_route.route('/:id')
     .get((req, res) => {
         Bars.findById(req.params.id, (err, result) => {
             console.log(result)
-            if (!result.length) res.send("Aucun bar trouvé")
+            if (!result) res.send("Aucun bar trouvé")
             else res.json(result)
         })
     })
@@ -56,7 +56,7 @@ bar_route.route('/add')
 
 bar_route.route('/add/:id/beer')
 
-    .post((req, res) => {  
+    .post((req, res) => {
         var newBeer;
         Beer.find({ name: req.body.name }, (err, beer) => {
             if (!beer.length) {
@@ -67,7 +67,7 @@ bar_route.route('/add/:id/beer')
             }
         })
         Bars.findByIdAndUpdate(req.params.id, (err, result) => {
-           console.log(result)
+            console.log(result)
             if (result) {
                 result.beers.push(newBeer)
                 result.save()
@@ -77,5 +77,14 @@ bar_route.route('/add/:id/beer')
             }
         })
     })
+
+bar_route.route('/edit/:id')
+    .put((req, res) => {
+        var modifs = req.body
+        Bars.findByIdAndUpdate(req.params.id, modifs, { new: true }, (err, result) => {
+            res.json(result)
+        })
+    })
+
 
 module.exports = bar_route
