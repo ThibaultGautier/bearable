@@ -46,9 +46,11 @@ breweries_route.route('/add')
 
     breweries_route.route('/edit/:id')
     .put((req, res) => {
-        var modifs = req.body
-        Breweries.findByIdAndUpdate(req.params.id, modifs, { new: true }, (err, result) => {
-            res.json(result)
+        var id = req.params.id
+        var modifs = req.body.name
+        console.log(modifs)
+        Breweries.findByIdAndUpdate(id, modifs, { new: true }).then((result)=>{
+            console.log("MON RES : " + result)
         })
     })
     breweries_route.route('/delete/:id')    
