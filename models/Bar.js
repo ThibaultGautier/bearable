@@ -20,10 +20,10 @@ var BarSchema = new mongoose.Schema({
     longitude: {
         type: String,
     },
-    HappyHourStart: {
+    happyHourStart: {
         type: String,
     },
-    HappyHourEnd: {
+    happyHourEnd: {
         type: String,
     },
     beers: [{

@@ -67,9 +67,8 @@ bar_route.route('/add/:id/beer')
             }
         })
         Bars.findByIdAndUpdate(req.params.id, (err, result) => {
-            console.log(result)
             if (result) {
-                result.beers.push(newBeer)
+                result.beers.push(newBeer.name)
                 result.save()
             }
             else {
